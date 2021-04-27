@@ -3,7 +3,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  ListItemSecondaryAction,
+  Box,
   Checkbox,
   makeStyles,
 } from "@material-ui/core";
@@ -24,14 +24,18 @@ const useStyles = makeStyles((theme) => ({
 export function ContactItem({ value, labelId, handleToggle, checked }) {
   const classes = useStyles();
   return (
-    <ListItem button className={classes.listItem}>
+    <ListItem
+      button
+      className={classes.listItem}
+      onClick={handleToggle(value.id)}
+    >
       <ListItemAvatar>
         <Avatar
           alt={`${value.first_name} ${value.last_name} avatar`}
           src={value.avatar}
         />
       </ListItemAvatar>
-      <div>
+      <Box flexGrow={1}>
         <ListItemText
           id={labelId}
           primary={`${value.first_name}  ${value.last_name} `}
@@ -44,15 +48,14 @@ export function ContactItem({ value, labelId, handleToggle, checked }) {
           primaryTypographyProps={{ variant: "inherit" }}
           className={classes.email}
         />
-      </div>
-      <ListItemSecondaryAction>
+      </Box>
+      <>
         <Checkbox
           edge="end"
-          onChange={handleToggle(value.id)}
           checked={checked.indexOf(value.id) !== -1}
           inputProps={{ "aria-labelledby": labelId }}
         />
-      </ListItemSecondaryAction>
+      </>
     </ListItem>
   );
 }
